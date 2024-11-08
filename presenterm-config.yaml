@@ -1,0 +1,5 @@
+
+# [Configuration - presenterm documentation](https://mfontanini.github.io/presenterm/guides/configuration.html#preferred-image-protocol)
+options:
+  # whether slides are automatically terminated when a slide title is found.
+  implicit_slide_ends: true
