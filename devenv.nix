@@ -8,6 +8,9 @@
     lolcat
     qrencode
     plantuml
+
+    # pyo3 talk
+    maturin
   ];
 
   scripts.present.exec = ''
@@ -21,6 +24,9 @@
   # https://devenv.sh/languages/
   languages.rust.enable = true;
   languages.rust.channel = "stable";
+
+  languages.python.enable = true;
+  languages.python.directory = "./pyO3-talk/";
 
   enterShell = ''
     figlet -f epic -w 120 pyO3-talk
