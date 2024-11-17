@@ -53,8 +53,14 @@ TODO: https://pyo3.rs/v0.23.0/performance.html#extract-versus-downcast
 
 <!-- end_slide -->
 
-# Comparison with Rust
+Comparing Rust and Python
+---
 
+# Syntax
+
+<!-- column_layout: [1,1] -->
+
+<!-- column: 0 -->
 
 ```python +exec
 def my_function(x: int, y: int) -> int:
@@ -67,14 +73,15 @@ class MyData:
     b: int
 
 def main():
-    print("applying a function:", my_function(2, 3))
+    result = my_function(2, 3)
     data = MyData(a = 42, b = 0)
-    print(f"data: a: {data.a} b: {data.b}")
+    print(f"{result}: a: {data.a} b: {data.b}")
 
 main()
 
 ```
 
+<!-- column: 1 -->
 
 ```rust +exec
 fn my_function(x: i64, y: i64) -> i64 {
@@ -87,11 +94,66 @@ struct MyData {
 }
 
 fn main() {
-    println!("applying a function: {}", my_function(2,3));
+    let result = my_function(2,3);
     let data = MyData{a: 42, b: 0};
-    println!("data: a: {} b: {}", data.a, data.b);
+    println!("{result}: a: {} b: {}", 
+        data.a, data.b);
 }
 ```
+
+Comparing Rust and Python
+---
+
+<!-- column_layout: [3,3] -->
+<!-- column: 0 -->
+
+
+# Rust
+<!-- pause  -->
+<!-- incremental_lists: true -->
+
+- compiled
+- statically typed
+<!-- new_lines: 1 -->
+<!-- pause -->
+
+## TIOBE number 14 (1.17%)
+
+<!-- pause -->
+<!-- incremental_lists: true -->
+## selling points
+<!-- pause -->
+- - performance
+- - type and memory safety
+- - borrow checker (no garbage collector)
+- - immutability is the default
+- - concurrency
+
+
+<!-- pause  -->
+
+
+<!-- column: 1 -->
+
+# Python
+<!-- pause  -->
+
+<!-- incremental_lists: true -->
+- interpreted
+- dynamically typed
+- - support for optional typing using [`mypy`](https://github.com/python/mypy)
+<!-- new_lines: 1 -->
+<!-- pause -->
+## TIOBE most popular language (22%)
+<!-- pause -->
+<!-- incremental_lists: true -->
+
+## selling points
+<!-- pause -->
+- - one of the most popular programming languages
+- - focus on code readability
+- - significant indentation (!)
+- - widespread use in the machine learning community
 
 
 Python Efficiency
@@ -101,7 +163,7 @@ Python Efficiency
 
 <!-- pause -->
 
-![performance/energy](./pics/perf.png)
+![image:width:40%](./pics/perf.png)
 
 > Source: [It's Not Easy Being Green: On the Energy Efficiency of Programming Languages](https://arxiv.org/abs/2410.05460)
 
