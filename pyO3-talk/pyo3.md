@@ -91,8 +91,6 @@ fn main() {
     let data = MyData{a: 42, b: 0};
     println!("data: a: {} b: {}", data.a, data.b);
 }
-
-
 ```
 
 
@@ -145,5 +143,93 @@ What is PyO3?
 - And vice versa (Rust calling into Python), although not covered here...
 
 
+Demo (getting started)
+---
+
+# Ensuring we have `maturin`, `cargo` and `python` installed
+
+```bash +exec
+maturin --version
+cargo --version
+python --version
+```
+
+<!-- end_slide -->
+
+Demo (getting started)
+---
+# Create a new PyO3 `cargo` project
+
+```bash +exec
+maturin new --mixed -b pyo3 demo-project
+```
+
+Demo (getting started)
+---
+# See what we got
+
+```bash +exec
+tree -a demo-project
+```
+
+Demo (getting started)
+---
+# The `cargo` project
+
+```file +line_numbers
+path: frozen-demo-project/Cargo.toml
+language: rust
+```
+
+Demo (getting started)
+---
+# The `rust` code
+
+```file +line_numbers
+path: frozen-demo-project/src/lib.rs
+language: rust
+```
+
+Demo (getting started)
+---
+# The `python` project
+
+```file +line_numbers
+path: frozen-demo-project/pyproject.toml
+language: toml
+```
+
+Demo (getting started)
+---
+# The `python` code
+
+```file +line_numbers
+path: frozen-demo-project/python/tests/test_all.py
+language: python
+```
+
+Demo (getting started)
+---
+# Building the `rust` code into a `python` module
 
 
+## Setup Python Virtual Env as destination 
+```bash
+cd demo-project
+python -m venv .venv --prompt demo-py
+source .venv/bin/activate
+```
+
+## Building
+```bash
+maturin develop
+```
+
+## Testing
+```bash
+pip install pytest
+pytest
+```
+
+Next
+---
