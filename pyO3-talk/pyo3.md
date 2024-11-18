@@ -62,7 +62,7 @@ Comparing Rust and Python
 
 <!-- column: 0 -->
 
-```python +exec
+```python {1-2|4-8|10-13} +exec
 def my_function(x: int, y: int) -> int:
     return x + y
 
@@ -83,7 +83,7 @@ main()
 
 <!-- column: 1 -->
 
-```rust +exec
+```rust {1-3|5-8|10-15} +exec
 fn my_function(x: i64, y: i64) -> i64 {
     x + y
 }
@@ -238,7 +238,7 @@ Demo (getting started)
 ---
 # The `cargo` project
 
-```file +line_numbers
+```file {1-4|6-8|10-11}
 path: frozen-demo-project/Cargo.toml
 language: rust
 ```
@@ -247,7 +247,7 @@ Demo (getting started)
 ---
 # The `rust` code
 
-```file +line_numbers
+```file {1|3-7|9-14} +line_numbers
 path: frozen-demo-project/src/lib.rs
 language: rust
 ```
