@@ -15,8 +15,28 @@ theme:
       right: "{current_slide} / {total_slides}"
 ---
 
+Goals
+---
 
-# Agenda
+# PyO3: Introduction
+
+<!-- pause -->
+
+# PyO3: How to get started?
+
+<!-- pause -->
+
+# PyO3: How does it work?
+
+```mermaid +render +width:50%
+sequenceDiagram
+    Mark --> Bob: Hello!
+    Bob --> Mark: Oh, hi mark!
+```
+
+Agenda
+---
+
 - Motivation
 - - Python
 - - Efficiency
@@ -197,12 +217,97 @@ Notable examples of Python libraries implemented in more efficient languages
 - Implemented in Python and Rust 
 - - Utilizing the Rust crate [`timely`](https://github.com/TimelyDataflow/timely-dataflow)
 
+Impact on PyPI
+---
+
+![](./pics/pypi_rust.png)
+> [David Hewitt: How Python Harnesses Rust through PyO3](https://www.youtube.com/watch?v=UilujdubqVU&t=733s)
 
 What is PyO3?
 ---
 
 - Rust bindings for Python. Allowing you to write Rust modules to be consumed in a Python application.
 - And vice versa (Rust calling into Python), although not covered here...
+
+How PyO3 works
+---
+
+```rust {1}
+#[pyfunction]
+fn rust_function() { ... }
+```
+
+- Proc Macro which adds Rust code that targets Python's C API
+
+<!-- pause -->
+
+```rust
+unsafe extern "C" fn __wrap() { ... }
+
+PyMethodDef {
+    ml_meth: __wrap as *mut c_void,
+    ...
+}
+```
+
+<!-- pause -->
+
+- `Maturin` handles the task of compiling the Rust code to a library placed where Python can consume it.
+
+```
+.--------.  .-------.
+| b.so   |  | b.pyd |
+|      |  |     󰨡 |
+`--------'  `-------'
+
+```
+
+How PyO3 works - Python side
+---
+
+# Imports
+
+```python
+import b
+```
+
+- tells Python to import `b.py` and import classes and functions
+
+<!-- pause -->
+
+- can also tell Python to import `b/__init__.py`
+
+<!-- pause -->
+
+- can also tell Python to import a correctly named compiled library
+
+<!-- pause -->
+
+```
+                  .----------.
+                  | python   |
+                  |          |
+                  | import b |
+                  `----------'
+                       |
+                       |
+                       v
+            .--------.   .-------.
+            | b.so   |   | b.pyd |
+            |        | + |       |
+            |      |   |     󰨡 |
+            `--------'   `-------'
+                       ^
+                       |
+                       |
+                    .-------.
+                    | b.rs  |
+                    |       |
+                    |    🦀|
+                    `-------'
+
+```
+
 
 
 Demo (getting started)
