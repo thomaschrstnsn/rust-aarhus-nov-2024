@@ -15,14 +15,31 @@ theme:
       right: "{current_slide} / {total_slides}"
 ---
 
-# Slides are here
+`whoami`
+---
+
+
+<!-- column_layout: [1,1] -->
+
+<!-- column: 0 -->
+## first paid software -> 2004
+## Professional: 󰙲    
+## Hobby:   
+
+<!-- column: 1 -->
+## Business domains: 
+*Mobile OS* - public job centres - *classifieds* - energy trading - *proprietary trading*
+
+<!-- reset_layout -->
 
 ```bash +exec_replace +no_background
 url="https://github.com/thomaschrstnsn/rust-aarhus-nov-2024/"
-echo "$url"| qrencode -t utf8i
-echo "$url"
+echo "$url"| qrencode -t utf8i 
 ```
 
+```
+https://github.com/thomaschrstnsn/rust-aarhus-nov-2024/
+```
 
 
 Goals
