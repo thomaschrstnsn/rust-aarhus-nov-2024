@@ -8,6 +8,7 @@
     lolcat
     qrencode
     plantuml
+    graph-easy
 
     # pyo3 talk
     maturin
