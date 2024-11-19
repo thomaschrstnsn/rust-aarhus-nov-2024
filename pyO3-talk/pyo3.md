@@ -28,7 +28,7 @@ theme:
 
 <!-- column: 1 -->
 ## Business domains: 
-*Mobile OS* - public job centres - *classifieds* - energy trading - *proprietary trading*
+*Mobile OS* - public job centres - *agriculture* - classifieds - *energy trading* - proprietary trading
 
 <!-- reset_layout -->
 
@@ -42,74 +42,35 @@ https://github.com/thomaschrstnsn/rust-aarhus-nov-2024/
 ```
 
 
-Goals
----
-
-# PyO3: Introduction
-
-<!-- pause -->
-
-# PyO3: How to get started?
-
-<!-- pause -->
-
-# PyO3: How does it work?
-
-```mermaid +render +width:50%
-sequenceDiagram
-    Mark --> Bob: Hello!
-    Bob --> Mark: Oh, hi mark!
-```
-
 Agenda
 ---
+# Comparing Python to Rust
+Motivation for writing Python packages in other languages ⚡️
+<!-- pause -->
 
-- Motivation
-- - Python
-- - Efficiency
-- - Comparison with Rust
+# PyO3
+Rust crate that can be used to generate a native Python module
+
+<!-- pause -->
+## How does it work?
+
+<!-- pause -->
+
+## How to get started?
+
+<!-- pause -->
+
+## Tips and Tricks
+
+
+Comparing Python   with Rust  - Syntax
 ---
-- Examples from the Python ecosystem
-- Introduction to `PyO3` / `maturin`
----
-- Demo (getting started)
-- - "What do we get 'out of the box'?"
----
-- Examples
-- - returning values from Rust: todo: https://pyo3.rs/v0.23.0/conversions/tables.html
-- - `struct` from Rust
-- - `dict` from Python
-- - `callable` from Python
-
-TODO: https://pyo3.rs/v0.23.0/performance.html#extract-versus-downcast
-
----
-- Integration:
-- - Static vs dynamic typing
-- - Borrow checking vs garbage collection
-- - logging: todo: https://pyo3.rs/v0.23.0/ecosystem/logging.html#logging
-
-
-<!-- end_slide -->
-# Python is Great!
-
-- Python is very widely used, especially in "data" contexts
-- Easy to use and get started with
-- Dynamically typed
-
-
-<!-- end_slide -->
-
-Comparing Rust and Python
----
-
-# Syntax
 
 <!-- column_layout: [1,1] -->
 
 <!-- column: 0 -->
 
-```python {1-2|4-8|10-13} +exec
+```python {1-2|4-8|11-12|14-15} +exec
 def my_function(x: int, y: int) -> int:
     return x + y
 
@@ -121,8 +82,10 @@ class MyData:
 
 def main():
     result = my_function(2, 3)
+    print(f"result {result}")
+
     data = MyData(a = 42, b = 0)
-    print(f"{result}: a: {data.a} b: {data.b}")
+    print(f"a: {data.a} b: {data.b}")
 
 main()
 
@@ -130,7 +93,7 @@ main()
 
 <!-- column: 1 -->
 
-```rust {1-3|5-8|10-15} +exec
+```rust {1-3|5-8|11-12|14-16} +exec
 fn my_function(x: i64, y: i64) -> i64 {
     x + y
 }
@@ -142,33 +105,58 @@ struct MyData {
 
 fn main() {
     let result = my_function(2,3);
+    println!("result {result}");
+
     let data = MyData{a: 42, b: 0};
-    println!("{result}: a: {} b: {}", 
+    println!("a {} b: {}", 
         data.a, data.b);
 }
 ```
 
-Comparing Rust and Python
+Comparing Python   with Rust  - High level
 ---
 
-<!-- column_layout: [3,3] -->
+<!-- column_layout: [1,1] -->
+
 <!-- column: 0 -->
 
+# Python
+
+<!-- incremental_lists: true -->
+## interpreted
+## dynamically typed
+<!-- pause -->
+- static typing with [`mypy`](https://github.com/python/mypy)
+<!-- new_lines: 1 -->
+<!-- pause -->
+<!-- incremental_lists: true -->
+
+## Selling points
+<!-- pause -->
+- - one of the most popular programming languages
+- - focus on code readability
+- - significant indentation (!)
+- - widespread use in the machine learning community
+<!-- pause -->
+<!-- incremental_lists: false -->
+## TIOBE most popular language (22%)
+## Stack Overflow 2024 Survey
+- Desired 42% 
+- Admired 68%
+
+<!-- pause -->
+
+<!-- column: 1 -->
 
 # Rust
 <!-- pause  -->
 <!-- incremental_lists: true -->
-
-- compiled
-- statically typed
-<!-- new_lines: 1 -->
-<!-- pause -->
-
-## TIOBE number 14 (1.17%)
-
+## compiled
+## statically typed
+<!-- new_lines: 4 -->
 <!-- pause -->
 <!-- incremental_lists: true -->
-## selling points
+## Selling points
 <!-- pause -->
 - - performance
 - - type and memory safety
@@ -177,39 +165,19 @@ Comparing Rust and Python
 - - concurrency
 
 
-<!-- pause  -->
-
-
-<!-- column: 1 -->
-
-# Python
-<!-- pause  -->
-
-<!-- incremental_lists: true -->
-- interpreted
-- dynamically typed
-- - support for optional typing using [`mypy`](https://github.com/python/mypy)
-<!-- new_lines: 1 -->
 <!-- pause -->
-## TIOBE most popular language (22%)
-<!-- pause -->
-<!-- incremental_lists: true -->
 
-## selling points
-<!-- pause -->
-- - one of the most popular programming languages
-- - focus on code readability
-- - significant indentation (!)
-- - widespread use in the machine learning community
+<!-- incremental_lists: false -->
+## TIOBE number 14 (1.17%)
+## Stack Overflow 2024 Survey
+-  Desired 29% 
+- Admired 83%
 
 
-Python Efficiency
+
+
+Comparing Python   with Rust  - Efficiency
 ---
-- Pure Python can be 75x slower than "native" (`C`/`C++`/`Rust`)
-- TODO: cloud bill, datacenter, environment
-
-<!-- pause -->
-
 ![image:width:40%](./pics/perf.png)
 
 > Source: [It's Not Easy Being Green: On the Energy Efficiency of Programming Languages](https://arxiv.org/abs/2410.05460)
@@ -218,43 +186,104 @@ Python Efficiency
 > GNU time or Python’s memory_profiler to measure peak or “total” memory usage, respectively.
 > The programs used for comparison are from the Computer Language Benchmark Game (CLBG)
 
-Notable examples of Python libraries implemented in more efficient languages
+<!-- pause -->
+
+# Pure Python is ~75x slower than "native" languages (`C`/`C++`/`Rust`)
+
+<!-- pause -->
+<!-- incremental_lists: true -->
+- Impacts: 
+- - hosting bills 💸
+- - environment 🌍 🔌
+
+Python libraries implemented in more efficient languages
 ---
 
-# Popular libraries in the Python ecosystem
+# [Popular libraries in the Python ecosystem](https://pypistats.org)
 <!-- pause -->
 
 ## [`NumPy`](https://numpy.org/) 
 > The fundamental package for scientific computing with Python.
 - Implemented in C & Python
+- Downloads last month: 319,934,331
 
 <!-- pause -->
 
 ## [`pandas`](https://pandas.pydata.org/) - `DataFrames`
-> `pandas` is a fast, powerful, flexible and easy to use data analysis and manipulation tool
+> pandas is a fast, powerful, flexible and easy to use data analysis and manipulation tool
 - Critical paths are written in Cython or C
+- Downloads last month: 253,891,605
 
 <!-- pause -->
 ## [`Polars`](https://pola.rs/) 
 - "`pandas` in Rust", 50x speedup
+- Downloads last month: 9,275,321
+
+
+Python tools implemented in more efficient languages
+---
+
+# [Rust tools in the Python ecosystem](https://pypistats.org)
 
 <!-- pause -->
-## [`bytewax`](https://bytewax.io/)
->  Stream processing as easy as Py
-- Implemented in Python and Rust 
-- - Utilizing the Rust crate [`timely`](https://github.com/TimelyDataflow/timely-dataflow)
 
-Impact on PyPI
+## [`ruff`](https://docs.astral.sh/ruff/)
+> An extremely fast Python linter and code formatter, written in Rust.
+> ⚡️ 10-100x faster than existing linters (like Flake8) and formatters (like Black)
+- Downloads last month: 30,524,476
+
+<!-- pause -->
+
+## [`uv`](https://docs.astral.sh/uv/)
+> An extremely fast Python package and project manager, written in Rust.
+> ⚡️ 10-100x faster than pip.
+- Downloads last month: 18,159,832
+
+
+Rust   Impact on PyPI
 ---
 
 ![](./pics/pypi_rust.png)
-> [David Hewitt: How Python Harnesses Rust through PyO3](https://www.youtube.com/watch?v=UilujdubqVU&t=733s)
+> [PyCon US 2024: David Hewitt - How Python Harnesses Rust through PyO3](https://www.youtube.com/watch?v=UilujdubqVU&t=733s)
 
 What is PyO3?
 ---
 
 - Rust bindings for Python. Allowing you to write Rust modules to be consumed in a Python application.
-- And vice versa (Rust calling into Python), although not covered here...
+
+
+```bash +exec_replace +no_background
+cat << EOF | graph-easy --as=boxart
+digraph {
+    rankdir=LR;
+    compound=true;
+    splines=true;
+    node [fontname="Handlee"];
+    
+    subgraph python {
+        label=" Python Program";
+        rust_code [label=" Rust code"];
+    }
+    
+}
+EOF
+```
+
+```bash +exec_replace +no_background
+cat << EOF | graph-easy --as=boxart
+digraph {
+    rankdir=LR;
+    compound=true;
+    splines=true;
+    node [fontname="Handlee"];
+    
+    subgraph rust {
+        label=" Rust Program";
+        python_code [label=" Python code"];
+    }
+}
+EOF
+```
 
 How PyO3 works
 ---
@@ -332,7 +361,6 @@ import b
                     |       |
                     |    🦀|
                     `-------'
-
 ```
 
 
