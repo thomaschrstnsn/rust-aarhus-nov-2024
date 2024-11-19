@@ -45,7 +45,9 @@
   };
 
   enterShell = ''
-    figlet -w 120 rust aarhus | lolcat
+    figlet -f univers -w 120 rust aarhus | lolcat
+    figlet -f univers -w 120 PyO3 | lolcat
+    figlet -f univers -w 120 Pool Monitor | lolcat
     echo
     echo "✅" $(presenterm --version)
     echo "✅" $(cargo --version)
