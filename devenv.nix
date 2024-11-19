@@ -26,6 +26,10 @@
     present ./pyO3-talk/pyo3.md $@
   '';
 
+  scripts.mmdc.exec = ''
+    $DEVENV_ROOT/node_modules/.bin/mmdc $@
+  '';
+
   # https://devenv.sh/languages/
   languages.rust.enable = true;
   languages.rust.channel = "stable";
@@ -33,12 +37,20 @@
   languages.python.enable = true;
   languages.python.directory = "./pyO3-talk/";
 
+  # for mermaid-cli
+  languages.javascript = {
+    enable = true;
+    npm.enable = true;
+    npm.install.enable = true;
+  };
+
   enterShell = ''
     figlet -w 120 rust aarhus | lolcat
     echo
     echo "✅" $(presenterm --version)
     echo "✅" $(cargo --version)
     echo "✅" $(python --version)
+    echo "✅" mermaid-cli $(mmdc --version)
     echo
     echo usage:
     echo "$ present <slides.md>"
