@@ -11,6 +11,9 @@
 
     # pyo3 talk
     maturin
+  ] ++ lib.optionals (! pkgs.stdenv.isDarwin) [
+    # mermaid-cli is npm installed on macos
+    mermaid-cli
   ];
 
   scripts.present.exec = ''
@@ -26,10 +29,6 @@
     present ./pyO3-talk/pyo3.md $@
   '';
 
-  scripts.mmdc.exec = ''
-    $DEVENV_ROOT/node_modules/.bin/mmdc $@
-  '';
-
   # https://devenv.sh/languages/
   languages.rust.enable = true;
   languages.rust.channel = "stable";
@@ -39,7 +38,7 @@
 
   # for mermaid-cli
   languages.javascript = {
-    enable = true;
+    enable = pkgs.stdenv.isDarwin;
     npm.enable = true;
     npm.install.enable = true;
   };
