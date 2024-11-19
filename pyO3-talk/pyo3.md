@@ -15,6 +15,16 @@ theme:
       right: "{current_slide} / {total_slides}"
 ---
 
+# Slides are here
+
+```bash +exec_replace +no_background
+url="https://github.com/thomaschrstnsn/rust-aarhus-nov-2024/"
+echo "$url"| qrencode -t utf8i
+echo "$url"
+```
+
+
+
 Goals
 ---
 
@@ -400,3 +410,14 @@ pytest
 
 Next
 ---
+
+The end
+---
+# Slides are here
+
+```bash +exec_replace +no_background
+url="https://github.com/thomaschrstnsn/rust-aarhus-nov-2024/"
+echo "$url"| qrencode -t utf8i
+echo "$url"
+```
+
