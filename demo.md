@@ -79,6 +79,15 @@ digraph {
 EOF
 ```
 
+Mermaid cli
+---
+
+```mermaid +render +width:50%
+sequenceDiagram
+    Mark --> Bob: Hello!
+    Bob --> Mark: Oh, hi mark!
+```
+
 Another slide
 ---
 

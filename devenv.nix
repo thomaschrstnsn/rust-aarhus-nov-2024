@@ -53,6 +53,9 @@
     echo "✅" $(cargo --version)
     echo "✅" $(python --version)
     echo "✅" mermaid-cli $(mmdc --version)
+    echo "✅" $(plantuml --version | head -n 1)
+    echo "✅" $(qrencode --version)
+    echo "✅" $(lolcat --version)
     echo
     echo usage:
     echo "$ present <slides.md>"
