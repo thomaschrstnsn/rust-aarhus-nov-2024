@@ -34,7 +34,7 @@ theme:
 
 ```bash +exec_replace +no_background
 url="https://github.com/thomaschrstnsn/rust-aarhus-nov-2024/"
-echo "$url"| qrencode -t utf8i 
+echo "$url"| qrencode -t utf8i
 ```
 
 ```
@@ -311,58 +311,60 @@ PyMethodDef {
 - `Maturin` handles the task of compiling the Rust code to a library placed where Python can consume it.
 
 ```
-.--------.  .-------.
-| b.so   |  | b.pyd |
-|      |  |     󰨡 |
-`--------'  `-------'
-
+┌−−−−−−−−−−−−−−−−┐                ┌−−−−−−−−−−−−−−−−−−−−−−−−−−┐
+╎   Rust crate  ╎                ╎   Python C API Library  ╎
+╎                ╎                ╎                          ╎
+╎ ┌────────────┐ ╎  compilation   ╎ ┌──────────────────────┐ ╎
+╎ │    b.rs    │ ╎ ─────────────▶ ╎ │       b.pyd 󰨡        │ ╎
+╎ └────────────┘ ╎                ╎ └──────────────────────┘ ╎
+╎                ╎                ╎ ┌──────────────────────┐ ╎
+└−−−−−−−−−−−−−−−−┘                ╎ │  b.so              │ ╎
+                                  ╎ └──────────────────────┘ ╎
+                                  └−−−−−−−−−−−−−−−−−−−−−−−−−−┘
 ```
+
 
 How PyO3 works - Python side
 ---
 
-# Imports
-
 ```python
 import b
 ```
+<!-- pause -->
 
-- tells Python to import `b.py` and import classes and functions
+- Can tell Python to:
+<!-- new_lines: 1 -->
+- - import `b.py` and import classes and functions
+
+<!-- new_lines: 1 -->
+<!-- pause -->
+
+- - import `b/__init__.py`
+<!-- new_lines: 1 -->
 
 <!-- pause -->
 
-- can also tell Python to import `b/__init__.py`
+
+- - import a correctly named compiled library
 
 <!-- pause -->
+```bash +exec_replace +no_background
+cat << EOF | graph-easy --as=boxart
+digraph {
+    rankdir=LR;
+    compound=true;
+    splines=true;
+    node [fontname="Handlee"];
 
-- can also tell Python to import a correctly named compiled library
+    source [label=" b.rs"];
+    python_capi [label=" Python C API Library"];
+    python [label=" Python\nimport b"];
 
-<!-- pause -->
-
+    source -> python_capi [label="1. compilation"]
+    python -> python_capi [label="2. import"]
+}
+EOF
 ```
-                  .----------.
-                  | python   |
-                  |          |
-                  | import b |
-                  `----------'
-                       |
-                       |
-                       v
-            .--------.   .-------.
-            | b.so   |   | b.pyd |
-            |        | + |       |
-            |      |   |     󰨡 |
-            `--------'   `-------'
-                       ^
-                       |
-                       |
-                    .-------.
-                    | b.rs  |
-                    |       |
-                    |    🦀|
-                    `-------'
-```
-
 
 
 Demo (getting started)
@@ -394,46 +396,47 @@ Demo (getting started)
 tree -a demo-project
 ```
 
-Demo (getting started)
+Demo (getting started) - `Cargo.toml`
 ---
-# The `cargo` project
+# The `Cargo.toml` project file
 
 ```file {1-4|6-8|10-11}
 path: frozen-demo-project/Cargo.toml
 language: rust
 ```
 
-Demo (getting started)
+Demo (getting started) - `lib.rs`
 ---
-# The `rust` code
+# The Rust code
 
-```file {1|3-7|9-14} +line_numbers
+```file {1|3-7|9-14}
 path: frozen-demo-project/src/lib.rs
 language: rust
 ```
 
-Demo (getting started)
+Demo (getting started) - `pyproject.toml`
 ---
-# The `python` project
+# The  Python project
 
 ```file +line_numbers
 path: frozen-demo-project/pyproject.toml
 language: toml
 ```
 
-Demo (getting started)
+Demo (getting started) - `test_all.py`
 ---
-# The `python` code
+# The  Python code
 
 ```file +line_numbers
 path: frozen-demo-project/python/tests/test_all.py
 language: python
 ```
 
-Demo (getting started)
+Demo (getting started) - Building and Running
 ---
-# Building the `rust` code into a `python` module
+# Building the  Rust code into a  Python module
 
+<!-- pause -->
 
 ## Setup Python Virtual Env as destination 
 ```bash
@@ -442,10 +445,14 @@ python -m venv .venv --prompt demo-py
 source .venv/bin/activate
 ```
 
+<!-- pause -->
+
 ## Building
 ```bash
 maturin develop
 ```
+
+<!-- pause -->
 
 ## Testing
 ```bash
@@ -453,16 +460,23 @@ pip install pytest
 pytest
 ```
 
-Next
+TODO: Tips and Tricks
 ---
 
 The end
 ---
+# Thanks for listening
+
+# Questions?
+
 # Slides are here
 
 ```bash +exec_replace +no_background
 url="https://github.com/thomaschrstnsn/rust-aarhus-nov-2024/"
 echo "$url"| qrencode -t utf8i
-echo "$url"
+```
+
+```
+https://github.com/thomaschrstnsn/rust-aarhus-nov-2024/
 ```
 
