@@ -23,11 +23,11 @@ theme:
 
 <!-- column: 0 -->
 ## first paid software -> 2004
-## Professional: 󰙲    
+## Professional: 󰙲     
 ## Hobby:   
 
 <!-- column: 1 -->
-## Business domains: 
+## Business domains:
 *Mobile OS* - public job centres - *agriculture* - classifieds - *energy trading* - proprietary trading
 
 <!-- reset_layout -->
