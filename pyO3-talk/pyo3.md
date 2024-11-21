@@ -22,34 +22,43 @@ theme:
 <!-- column_layout: [1,1] -->
 
 <!-- column: 0 -->
-## first paid software -> 2004
+## First paid software -> 2004
 ## Professional: 󰙲     
 ## Hobby:   
 
-<!-- column: 1 -->
 ## Business domains:
 *Mobile OS* - public job centres - *agriculture* - classifieds - *energy trading* - proprietary trading
 
-<!-- reset_layout -->
 
+<!-- column: 1 -->
 ```bash +exec_replace +no_background
 url="https://github.com/thomaschrstnsn/rust-aarhus-nov-2024/"
 echo "$url"| qrencode -t utf8i
 ```
 
+<!-- reset_layout -->
 ```
 https://github.com/thomaschrstnsn/rust-aarhus-nov-2024/
 ```
 
+<!-- pause -->
+
+# Feel free to ask questions as we go on
 
 Agenda
 ---
+# Intended Audience
+Some Rust experience (or a burning desire to make you Python faster)
+<!-- pause -->
+
 # Comparing Python to Rust
 Motivation for writing Python packages in other languages ⚡️
 <!-- pause -->
 
 # PyO3
-Rust crate that can be used to generate a native Python module
+Rust crate that can be used to generate a native Python module 
+
+No Rust tool chain required when consuming the package!
 
 <!-- pause -->
 ## How does it work?
@@ -111,6 +120,7 @@ fn main() {
     println!("a {} b: {}", 
         data.a, data.b);
 }
+
 ```
 
 Comparing Python   with Rust  - High level
@@ -243,7 +253,7 @@ Python tools implemented in more efficient languages
 Rust   Impact on PyPI
 ---
 
-![](./pics/pypi_rust.png)
+![image:width:100%](./pics/pypi_rust.png)
 > [PyCon US 2024: David Hewitt - How Python Harnesses Rust through PyO3](https://www.youtube.com/watch?v=UilujdubqVU&t=733s)
 
 What is PyO3?
@@ -414,15 +424,6 @@ path: frozen-demo-project/src/lib.rs
 language: rust
 ```
 
-Demo (getting started) - `pyproject.toml`
----
-# The  Python project
-
-```file +line_numbers
-path: frozen-demo-project/pyproject.toml
-language: toml
-```
-
 Demo (getting started) - `test_all.py`
 ---
 # The  Python code
@@ -524,6 +525,9 @@ print(n)
 
 <!-- pause -->
 
+Implenting Python protocols
+---
+
 # We can implement `__repr__` and `__str__`
 
 ```rust {5-7|10-12}
@@ -548,15 +552,23 @@ impl Number {
 Tips and Tricks
 ---
 
-# Seemless integration with Python `dict`s
+# Seamless integration with Python `dict`s (object literals)
+
+
+```python
+my_object = {"name": "Odin", "title": "God", "eyes": 1}
+```
+
+<!-- pause -->
+
 
 [crate `dict_derive`](https://github.com/gperinazzo/dict-derive)
-
 
 ```rust
 use dict_derive::{FromPyObject, IntoPyObject};
 ```
 <!-- pause -->
+
 
 ```rust
 #[derive(FromPyObject, IntoPyObject)]
@@ -567,7 +579,8 @@ struct User {
 }
 ```
 
-<!-- pause -->
+Using `FromPyObject` and `IntoPyObject`
+---
 
 ```rust
 // Requires FromPyObject to receive a struct as an argument
@@ -614,18 +627,25 @@ mylib.get_default_user()
 ```
 
 
-The end
+The End 🔚
 ---
+<!-- column_layout: [1,1] -->
+<!-- column: 0 -->
+
 # Thanks for listening
 
 # Questions?
 
 # Slides are here
 
+<!-- column: 1 -->
+
 ```bash +exec_replace +no_background
 url="https://github.com/thomaschrstnsn/rust-aarhus-nov-2024/"
 echo "$url"| qrencode -t utf8i
 ```
+
+<!-- reset_layout -->
 
 ```
 https://github.com/thomaschrstnsn/rust-aarhus-nov-2024/
