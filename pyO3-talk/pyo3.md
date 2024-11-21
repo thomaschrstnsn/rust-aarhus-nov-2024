@@ -460,8 +460,159 @@ pip install pytest
 pytest
 ```
 
-TODO: Tips and Tricks
+Adding your own Rust data types
 ---
+
+<!-- column_layout: [1,1] -->
+
+<!-- column: 0 -->
+# Types (shapes of data)
+
+```rust
+#[pyclass]
+struct MyClass {
+    inner: i32,
+}
+
+// A "tuple" struct
+#[pyclass]
+struct Number(i32);
+
+#[pyclass]
+enum MyEnum {
+    Variant,
+    OtherVariant
+}
+```
+
+<!-- pause -->
+<!-- column: 1-->
+
+# Methods (Behaviour)
+
+```rust
+#[pymethods]
+impl Number {
+    #[new]
+    fn new(value: i32) -> Self {
+        Self(value)
+    }
+}
+```
+
+```rust
+#[pymodule]
+fn my_module(m: &Bound<'_, PyModule>) -> PyResult<()> {
+    m.add_class::<Number>()?;
+    Ok(())
+}
+```
+
+Using from Python
+---
+
+```python
+from my_module import Number
+
+n = Number(5)
+print(n)
+```
+
+```
+<builtins.Number object at 0x000002B4D185D7D0>
+```
+
+<!-- pause -->
+
+# We can implement `__repr__` and `__str__`
+
+```rust {5-7|10-12}
+#[pymethods]
+impl Number {
+    // For `__repr__` we want to return a string that Python code could use to recreate
+    // the `Number`, like `Number(5)` for example.
+    fn __repr__(&self) -> String {
+        format!("Number({})", self.0)
+    }
+    // `__str__` is generally used to create an "informal" representation, so we
+    // just forward to `i32`'s `ToString` trait implementation to print a bare number.
+    fn __str__(&self) -> String {
+        self.0.to_string()
+    }
+}
+```
+
+[PyO3 user guide - Class customizations](https://pyo3.rs/v0.23.1/class/protocols.html)
+
+
+Tips and Tricks
+---
+
+# Seemless integration with Python `dict`s
+
+[crate `dict_derive`](https://github.com/gperinazzo/dict-derive)
+
+
+```rust
+use dict_derive::{FromPyObject, IntoPyObject};
+```
+<!-- pause -->
+
+```rust
+#[derive(FromPyObject, IntoPyObject)]
+struct User {
+    name: String,
+    email: String,
+    age: u32,
+}
+```
+
+<!-- pause -->
+
+```rust
+// Requires FromPyObject to receive a struct as an argument
+#[pyfunction]
+fn get_contact_info(user: User) -> PyResult<String> {
+    Ok(format!("{} - {}", user.name, user.email))
+}
+```
+<!-- pause -->
+
+```rust
+// Requires IntoPyObject to return a struct
+#[pyfunction]
+fn get_default_user() -> PyResult<User> {
+    Ok(User {
+        name: "Default".to_owned(),
+        email: "default@user.com".to_owned(),
+        age: 27,
+    })
+}
+```
+
+`dict`s from Python
+---
+
+```python
+import mylib
+
+mylib.get_contact_info({"name": "Thor", "email": "thor@asgard.com", "age": 23})
+```
+
+```python
+'Thor - thor@asgard.com'
+```
+
+<!-- pause -->
+
+```python
+mylib.get_default_user()
+```
+
+```python
+{'name': 'Default', 'email': 'default@user.com', 'age': 27}
+```
+
 
 The end
 ---
