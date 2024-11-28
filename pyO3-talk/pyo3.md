@@ -48,7 +48,7 @@ https://github.com/thomaschrstnsn/rust-aarhus-nov-2024/
 Agenda
 ---
 # Intended Audience
-Some Rust experience (or a burning desire to make you Python faster)
+Some Rust experience (or a burning desire to make your Python faster)
 <!-- pause -->
 
 # Comparing Python to Rust
@@ -367,7 +367,7 @@ digraph {
     node [fontname="Handlee"];
 
     source [label=" b.rs"];
-    python_capi [label=" Python C API Library"];
+    python_capi [label=" Python C API Library\nb.so  \n  b.pyd 󰨡  "];
     python [label=" Python\nimport b"];
 
     source -> python_capi [label="1. compilation"]
@@ -579,11 +579,11 @@ struct User {
 }
 ```
 
-Using `FromPyObject` and `IntoPyObject`
+Using `FromPyObject`
 ---
 
 ```rust
-// Requires FromPyObject to receive a struct as an argument
+// FromPyObject to receive a struct as an argument
 #[pyfunction]
 fn get_contact_info(user: User) -> PyResult<String> {
     Ok(format!("{} - {}", user.name, user.email))
@@ -591,8 +591,21 @@ fn get_contact_info(user: User) -> PyResult<String> {
 ```
 <!-- pause -->
 
+```python
+import mylib
+
+mylib.get_contact_info({"name": "Thor", "email": "thor@asgard.com", "age": 23})
+```
+<!-- pause -->
+```python
+'Thor - thor@asgard.com'
+```
+
+Using `IntoPyObject`
+---
+
 ```rust
-// Requires IntoPyObject to return a struct
+// IntoPyObject to return a struct
 #[pyfunction]
 fn get_default_user() -> PyResult<User> {
     Ok(User {
@@ -602,29 +615,33 @@ fn get_default_user() -> PyResult<User> {
     })
 }
 ```
-
-`dict`s from Python
----
-
-```python
-import mylib
-
-mylib.get_contact_info({"name": "Thor", "email": "thor@asgard.com", "age": 23})
-```
-
-```python
-'Thor - thor@asgard.com'
-```
-
 <!-- pause -->
 
 ```python
 mylib.get_default_user()
 ```
+<!-- pause -->
 
 ```python
 {'name': 'Default', 'email': 'default@user.com', 'age': 27}
 ```
+
+Recap
+---
+
+# Compared Python to Rust
+## Similarties and differences
+## Why build Rust modules for Python?
+<!-- pause -->
+
+# PyO3
+## How does it work?
+## How to get started?
+
+<!-- pause -->
+
+# `dict_derive` can be useful
+
 
 
 The End 🔚
