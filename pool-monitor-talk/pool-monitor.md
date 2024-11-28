@@ -384,15 +384,15 @@ async fn post_data(
     socket.set_timeout(Some(embassy_time::Duration::from_secs(TIMEOUT_SECS)));
 
     let r = socket.connect((ip, port)).await;
-    // error handling
+    // error handling ...
 
     let request = create_http_post_request(message);
-    // error handling
+    // error handling ...
 
     let request = request.unwrap();
 
     let r = write_all(&mut socket, &request.into_bytes()).await;
-    // error handling
+    // error handling ...
 
     ...
 ```
@@ -408,7 +408,7 @@ async fn post_data(
             return;
         }
         Ok(n) => n,
-        // error handling
+        // error handling ...
     };
 
     log::info!(
@@ -448,8 +448,10 @@ fn create_http_post_request(message: &TempMessage) -> Result<String<1024>, ()> {
 Wrapping up
 ---
 
-- TODO
-
+<!-- jump_to_middle -->
+- Rust on ESP32 has been:
+- - rock solid
+- - a fun learning experience
 
 
 The end
